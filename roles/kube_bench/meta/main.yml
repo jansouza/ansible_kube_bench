@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  role_name: ansible_kube_bench
+  author: 'Jan Souza'
+  description: 'An Ansible role to execute kube-bench'
+  license: BSD
+  min_ansible_version: '2.9.0'
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+  galaxy_tags: []
+
+dependencies: []

@@ -1,0 +1,48 @@
+---
+- name: Copy kuke-bench
+  copy:
+    src: "files/{{ kube_bench_file }}"
+    dest: "{{ remote_path }}/{{ kube_bench_file }}"
+    mode: 0750
+
+- name: Creates Folders
+  file:
+    path: "{{ remote_path }}/kube_bench/"
+    state: directory
+    mode: 0774
+
+- name: Extract
+  unarchive:
+    src: "{{ remote_path }}/{{ kube_bench_file }}"
+    dest: "{{ remote_path }}/kube_bench/"
+    remote_src: yes
+
+- name: Execute
+  command: "./kube-bench -v 2 --config-dir ./cfg --json --outputfile ./kube-bench-results.json run"
+  args:
+    chdir: "{{ remote_path }}/kube_bench/"
+
+- name: Create Report Folder
+  file:
+    path: "{{ report_path }}"
+    state: directory
+    mode: 0774
+  run_once: True
+  delegate_to: localhost
+  become: no
+
+- name: Get Remote file
+  fetch:
+    src: "{{ remote_path }}/kube_bench/kube-bench-results.json"
+    dest: "{{ report_path }}/{{ inventory_hostname }}-kube-bench-results.json"
+    flat: yes
+
+# Clean
+- name: Clean up files
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  ignore_errors: yes
+  with_items:
+    - { path: '{{ remote_path }}/{{ kube_bench_file }}' }
+    - { path: '{{ remote_path }}/kube_bench/' }

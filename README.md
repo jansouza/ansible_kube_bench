@@ -13,7 +13,7 @@ https://github.com/aquasecurity/kube-bench
 Build Status
 ----------------
 
-[![Build Status](https://travis.ibm.com/jangs/ansible_kube_bench.svg?token=zhQpCaYsxU4A82DyETij&branch=master)](https://travis.ibm.com/jangs/ansible_kube_bench)
+
 
 
 Download last Version

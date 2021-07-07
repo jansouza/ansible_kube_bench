@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "centos/7"
+  config.ssh.insert_key = false
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  config.vm.provider :libvirt do |vm|
+    vm.memory = 256
+    vm.cpus = 2
+  end
+
+  config.vm.hostname = "vagrant-el7"
+  config.vm.network :private_network, ip: "192.168.121.11"
+
+  # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
+  config.vm.define :linux do |linux|
+  end
+
+  #Install Script
+  config.vm.provision "file", source: "install.sh", destination: "/home/vagrant/install.sh"
+  config.vm.provision :shell, path: "install.sh"
+
+end

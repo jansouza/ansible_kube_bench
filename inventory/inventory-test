@@ -1,0 +1,5 @@
+[all]
+vagrant-el7   ansible_host=192.168.121.11     host_tags="{'name': 'env', 'value': 'PROD'}"
+
+[vagrant_linux]
+vagrant-el7

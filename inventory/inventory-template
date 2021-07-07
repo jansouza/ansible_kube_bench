@@ -1,0 +1,7 @@
+[all]
+master    ansible_host=X.X.X.X    host_tags="{'name': 'env', 'value': 'prod'},{'name': 'node_type', 'value': 'master'}"
+worker1   ansible_host=Y.Y.Y.Y    host_tags="{'name': 'env', 'value': 'prod'},{'name': 'node_type', 'value': 'node'}"
+
+[linux_servers]
+master
+worker1

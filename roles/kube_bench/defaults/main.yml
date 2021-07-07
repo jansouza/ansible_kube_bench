@@ -1,0 +1,4 @@
+---
+kube_bench_file: kube-bench_0.6.3_linux_amd64.tar.gz
+remote_path: "/tmp"
+report_path: "~/kube-bench-report"
