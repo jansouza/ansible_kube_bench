@@ -5,3 +5,9 @@ worker1   ansible_host=Y.Y.Y.Y    host_tags="{'name': 'env', 'value': 'prod'},{'
 [linux_servers]
 master
 worker1
+
+[master_nodes]
+master
+
+[worker_nodes]
+worker1

@@ -1,8 +1,30 @@
 ---
-- name: Execute Kube Bench
-  hosts: "{{ affected_host }}"
+- name: Execute Kube Bench - Master
+  hosts: "master_nodes"
   gather_facts: no
   strategy: free
   roles:
     - role: kube_bench
+      vars:
+        type: "master"
       become: yes
+
+- name: Execute Kube Bench - Worker
+  hosts: "worker_nodes"
+  gather_facts: no
+  strategy: free
+  roles:
+    - role: kube_bench
+      vars:
+        type: "worker"
+      become: yes
+
+- name: Report
+  hosts: localhost
+  gather_facts: no
+  tasks:
+
+    - name: Run CSV Report
+      script:
+        cmd: "../scripts/report.py -f {{ report_path }}"
+      when: report_path is defined

@@ -1,5 +1,10 @@
 ---
-- name: Copy kuke-bench
+- name: Check Type Defined
+  fail:
+   msg: "Type must be defined"
+  when: not type is defined
+
+- name: Copy kube-bench file - {{ kube_bench_file }}
   copy:
     src: "files/{{ kube_bench_file }}"
     dest: "{{ remote_path }}/{{ kube_bench_file }}"
@@ -17,17 +22,24 @@
     dest: "{{ remote_path }}/kube_bench/"
     remote_src: yes
 
-- name: Execute
-  command: "./kube-bench -v 2 --config-dir ./cfg --json --outputfile ./kube-bench-results.json run"
+- name: Execute - Master
+  command: "./kube-bench --targets=master -v 2 --config-dir ./cfg --json --outputfile ./kube-bench-results.json run"
   args:
     chdir: "{{ remote_path }}/kube_bench/"
+  when: type == "master"
+
+- name: Execute - Worker
+  command: "./kube-bench --targets=node -v 2 --config-dir ./cfg --json --outputfile ./kube-bench-results.json run"
+  args:
+    chdir: "{{ remote_path }}/kube_bench/"
+  when: type == "worker"
 
 - name: Create Report Folder
   file:
     path: "{{ report_path }}"
     state: directory
     mode: 0774
-  run_once: True
+  #run_once: True
   delegate_to: localhost
   become: no
 

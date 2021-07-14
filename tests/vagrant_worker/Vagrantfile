@@ -13,8 +13,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vm.cpus = 2
   end
 
-  config.vm.hostname = "vagrant-el7"
-  config.vm.network :private_network, ip: "192.168.121.11"
+  config.vm.hostname = "worker"
+  config.vm.network :private_network, ip: "192.168.121.12"
 
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
   config.vm.define :linux do |linux|
